@@ -4,7 +4,7 @@ import { Table, Button } from "react-bootstrap"
 import {useDispatch, useSelector} from 'react-redux'
 import Loader from "../components/Loader"
 import Message from "../components/Message"
-import {listUsers} from '../actions/userActions'
+import {listUsers, deleteUser} from '../actions/userActions'
 
 export default function UserListScreen({location, history}) {
 
@@ -13,13 +13,30 @@ export default function UserListScreen({location, history}) {
     const userList = useSelector(state => state.userList)
     const { loading, error, users } = userList
 
+
+    const userLogin = useSelector(state => state.userLogin)
+    const { userInfo } = userLogin
+
+
+    const userDelete = useSelector(state => state.userDelete)
+    const { success: successDelete } = userDelete
+    
     const deleteHandler = (id) => {
-        console.log('delete')
+        if(window.confirm('Are you sure')){
+            dispatch(deleteUser(id))
+        }
     }
 
     useEffect(() => {
-        dispatch(listUsers())
-    }, [dispatch])
+        if(userInfo && userInfo.isAdmin){
+            dispatch(listUsers())
+        } else {
+            history.push('/login')
+        }
+
+    }, [dispatch, history, successDelete, userInfo])
+
+
 
     return (
         <>
@@ -47,7 +64,7 @@ export default function UserListScreen({location, history}) {
                                     <i className='fas fa-times' style={{color:'red'}}></i>
                                 )}</td>
                                 <td>
-                                    <LinkContainer to={`/user/${user._id}/edit`}>
+                                    <LinkContainer to={`/admin/user/${user._id}/edit`}>
                                         <Button variant='light' className='btn-sm'>
                                             <i className='fas fa-edit'></i>
                                         </Button>
