@@ -66,13 +66,13 @@ export default function OrderListScreen({location, history}) {
                                 <td>
                                     <LinkContainer to={`/order/${order._id}`}>
                                         <Button variant='light' className='btn-sm'>
-                                            Details
+                                            Details 
                                         </Button>
                                     </LinkContainer>
                                    
                                 </td>
                             </tr>
-                        ) )}
+                        ) )} 
                     </tbody>
                 </Table>
             )}
