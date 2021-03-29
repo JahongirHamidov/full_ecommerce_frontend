@@ -6,6 +6,7 @@ import Loader from '../components/Loader'
 import Paginate from '../components/Paginate'
 import Message from '../components/Message'
 import {listProducts} from '../actions/productActions'
+import ProductCarousel from '../components/ProductCarousel'
 
 export default function HomeScreen({ match }) {
 
@@ -24,6 +25,7 @@ export default function HomeScreen({ match }) {
   
     return (
         <>
+        {!keyword && <ProductCarousel /> }
           <h1>Latest Products</h1>
           {loading ? (
               <Loader /> 
